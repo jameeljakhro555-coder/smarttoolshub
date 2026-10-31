@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SmartToolsHub offers free, simple online tools including an age calculator, word counter, text case converter and percentage calculator.">
+<meta name="theme-color" content="#101827">
+<title>SmartToolsHub — Free Online Tools</title>
+<style>
+:root{--bg:#0b1220;--panel:#131e30;--panel2:#1a2940;--text:#edf3ff;--muted:#a9b8ce;--accent:#64e3bd;--accent2:#7aa7ff;--line:#293a53}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#0b1220,#101c30 60%,#0b1220);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{padding:22px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:16px}
+.logo{font-weight:850;font-size:1.35rem;letter-spacing:-.5px}.logo span{color:var(--accent)}
+button,.btn{border:0;border-radius:11px;padding:11px 16px;background:var(--accent);color:#082019;font-weight:750;cursor:pointer}
+button:hover,.btn:hover{filter:brightness(1.08)}.lang{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.hero{max-width:1050px;margin:54px auto 35px;padding:0 22px;text-align:center}.eyebrow{color:var(--accent);font-weight:750;letter-spacing:1.7px;text-transform:uppercase;font-size:.78rem}
+h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:13px 0}.hero p{color:var(--muted);max-width:650px;margin:15px auto 0;font-size:1.08rem}
+.wrap{max-width:1100px;margin:auto;padding:0 22px 55px}.search{width:100%;padding:15px 17px;border-radius:13px;background:var(--panel);border:1px solid var(--line);color:var(--text);font-size:1rem;margin:10px 0 25px;outline:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:18px}.card{background:linear-gradient(160deg,var(--panel),#101a2b);border:1px solid var(--line);border-radius:18px;padding:21px;box-shadow:0 10px 28px #0002}
+.icon{font-size:1.8rem}.card h2{font-size:1.15rem;margin:8px 0 4px}.card p{color:var(--muted);font-size:.93rem;min-height:44px;margin:0 0 14px}
+.card button{width:100%}.toolbox{display:none;margin-top:13px;padding-top:14px;border-top:1px solid var(--line)}.toolbox.active{display:block}
+label{display:block;color:var(--muted);font-size:.88rem;margin:10px 0 5px}input,textarea,select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:#0c1626;color:var(--text);font:inherit}textarea{min-height:105px;resize:vertical}
+.result{background:#0b1728;border:1px solid var(--line);padding:12px;border-radius:10px;margin-top:10px;color:var(--accent);overflow-wrap:anywhere}
+.actionrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.actionrow button{flex:1;min-width:90px}
+footer{text-align:center;color:var(--muted);border-top:1px solid var(--line);padding:25px 15px;font-size:.9rem}
+.note{font-size:.83rem;color:var(--muted);margin-top:8px}
+[dir=rtl] body{text-align:right}[dir=rtl] header{direction:rtl}
+@media(max-width:560px){header{padding:16px 5%}.hero{margin-top:38px}.card{padding:18px}}
+</style>
+</head>
+<body>
+<header><div class="logo">Smart<span>Tools</span>Hub</div><button class="lang" id="langBtn" onclick="toggleLang()">اردو</button></header>
+<section class="hero">
+<div class="eyebrow" id="eyebrow">Simple • Free • Useful</div>
+<h1 id="headline">The tools you need,<br> all in one place.</h1>
+<p id="subhead">Fast, easy-to-use online tools. No account needed. Choose a tool below and get started.</p>
+</section>
+<main class="wrap">
+<input class="search" id="search" type="search" placeholder="Search a tool..." oninput="filterTools()">
+<div class="grid" id="grid">
+<article class="card" data-key="age calculator umar date">
+<div class="icon">🎂</div><h2 data-en="Age Calculator" data-ur="عمر معلوم کریں">Age Calculator</h2><p data-en="Find your age from your date of birth." data-ur="اپنی تاریخِ پیدائش سے عمر معلوم کریں۔">Find your age from your date of birth.</p>
+<button onclick="openTool('age')">Open tool</button><div class="toolbox" id="age">
+<label data-en="Date of birth" data-ur="تاریخِ پیدائش">Date of birth</label><input type="date" id="dob"><button style="margin-top:10px" onclick="calcAge()">Calculate age</button><div class="result" id="ageResult" aria-live="polite">Your result will appear here.</div></div></article>
+
+<article class="card" data-key="word counter words characters text">
+<div class="icon">📝</div><h2 data-en="Word Counter" data-ur="الفاظ گنیں">Word Counter</h2><p data-en="Count words, characters and sentences in your text." data-ur="اپنے متن کے الفاظ، حروف اور جملے گنیں۔">Count words, characters and sentences in your text.</p>
+<button onclick="openTool('words')">Open tool</button><div class="toolbox" id="words"><label>Your text</label><textarea id="wordText" oninput="countWords()" placeholder="Type or paste your text..."></textarea><div class="result" id="wordResult">Words: 0 · Characters: 0 · Sentences: 0</div></div></article>
+
+<article class="card" data-key="case converter uppercase lowercase text">
+<div class="icon">🔠</div><h2 data-en="Text Case Converter" data-ur="حروف کی تبدیلی">Text Case Converter</h2><p data-en="Convert text to UPPERCASE, lowercase or Title Case." data-ur="متن کو بڑے، چھوٹے یا ہر لفظ کے پہلے بڑے حرف میں بدلیں۔">Convert text to UPPERCASE, lowercase or Title Case.</p>
+<button onclick="openTool('case')">Open tool</button><div class="toolbox" id="case"><label>Your text</label><textarea id="caseText" placeholder="Enter text..."></textarea><div class="actionrow"><button onclick="convertCase('upper')">UPPERCASE</button><button onclick="convertCase('lower')">lowercase</button><button onclick="convertCase('title')">Title Case</button></div><div class="result" id="caseResult">Converted text will appear here.</div></div></article>
+
+<article class="card" data-key="percentage calculator percent maths">
+<div class="icon">％</div><h2 data-en="Percentage Calculator" data-ur="فیصد کیلکولیٹر">Percentage Calculator</h2><p data-en="Calculate what percentage one number is of another." data-ur="معلوم کریں کہ ایک عدد دوسرے عدد کا کتنے فیصد ہے۔">Calculate what percentage one number is of another.</p>
+<button onclick="openTool('percent')">Open tool</button><div class="toolbox" id="percent"><label>Number</label><input type="number" id="part" placeholder="e.g. 25"><label>Total</label><input type="number" id="total" placeholder="e.g. 200"><button style="margin-top:10px" onclick="calcPercent()">Calculate</button><div class="result" id="percentResult">Your result will appear here.</div></div></article>
+
+<article class="card" data-key="image compressor photo image size">
+<div class="icon">🖼️</div><h2 data-en="Image Compressor" data-ur="تصویر کا سائز کم کریں">Image Compressor</h2><p data-en="Reduce a photo's file size in your browser." data-ur="اپنے براؤزر میں تصویر کی فائل کا سائز کم کریں۔">Reduce a photo's file size in your browser.</p>
+<button onclick="openTool('image')">Open tool</button><div class="toolbox" id="image"><label>Select an image</label><input type="file" id="imageFile" accept="image/*"><label>Quality (lower means smaller file)</label><input type="range" id="quality" min=".2" max=".9" step=".1" value=".7"><button style="margin-top:10px" onclick="compressImage()">Compress image</button><div class="result" id="imageResult">Your compressed image will appear here.</div><div class="note">Image processing happens in your browser; your photo is not uploaded to this website.</div></div></article>
+
+<article class="card" data-key="unit converter cm inch length">
+<div class="icon">📏</div><h2 data-en="Length Converter" data-ur="لمبائی تبدیل کریں">Length Converter</h2><p data-en="Convert centimetres to inches and inches to centimetres." data-ur="سینٹی میٹر کو انچ اور انچ کو سینٹی میٹر میں بدلیں۔">Convert centimetres to inches and inches to centimetres.</p>
+<button onclick="openTool('length')">Open tool</button><div class="toolbox" id="length"><label>Value</label><input type="number" id="lengthValue" placeholder="Enter a number"><label>Convert</label><select id="lengthMode"><option value="cm">Centimetres to inches</option><option value="inch">Inches to centimetres</option></select><button style="margin-top:10px" onclick="convertLength()">Convert</button><div class="result" id="lengthResult">Your result will appear here.</div></div></article>
+</div>
+</main>
+<footer>© <span id="year"></span> SmartToolsHub · Free tools for everyone.</footer>
+<script>
+let urdu=false;
+function openTool(id){document.querySelectorAll('.toolbox').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.getElementById(id).scrollIntoView({behavior:'smooth',block:'nearest'});}
+function calcAge(){const v=document.getElementById('dob').value;const r=document.getElementById('ageResult');if(!v){r.textContent='Please select your date of birth.';return;}const b=new Date(v+'T00:00:00'),t=new Date();if(b>t){r.textContent='Date of birth cannot be in the future.';return;}let y=t.getFullYear()-b.getFullYear(),m=t.getMonth()-b.getMonth(),d=t.getDate()-b.getDate();if(d<0){m--;d+=new Date(t.getFullYear(),t.getMonth(),0).getDate();}if(m<0){y--;m+=12;}r.textContent=`${y} years, ${m} months and ${d} days`;}
+function countWords(){const s=document.getElementById('wordText').value.trim();const words=s?s.split(/\s+/).length:0;const chars=document.getElementById('wordText').value.length;const sentences=s?(s.match(/[.!?۔]+/g)||[]).length:0;document.getElementById('wordResult').textContent=`Words: ${words} · Characters: ${chars} · Sentences: ${sentences}`;}
+function convertCase(type){let s=document.getElementById('caseText').value;if(type==='upper')s=s.toUpperCase();if(type==='lower')s=s.toLowerCase();if(type==='title')s=s.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());document.getElementById('caseResult').textContent=s||'Please enter some text.';}
+function calcPercent(){const a=Number(document.getElementById('part').value),b=Number(document.getElementById('total').value),r=document.getElementById('percentResult');if(document.getElementById('part').value===''||document.getElementById('total').value===''||b===0){r.textContent='Please enter valid numbers; total cannot be zero.';return;}r.textContent=`${(a/b*100).toFixed(2)}%`;}
+function convertLength(){const v=Number(document.getElementById('lengthValue').value),mode=document.getElementById('lengthMode').value,r=document.getElementById('lengthResult');if(document.getElementById('lengthValue').value===''){r.textContent='Please enter a value.';return;}r.textContent=mode==='cm'?`${(v/2.54).toFixed(3)} inches`:`${(v*2.54).toFixed(3)} centimetres`;}
+function compressImage(){const f=document.getElementById('imageFile').files[0],r=document.getElementById('imageResult');if(!f){r.textContent='Please choose an image first.';return;}const reader=new FileReader();reader.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width;c.height=img.height;c.getContext('2d').drawImage(img,0,0);c.toBlob(blob=>{if(!blob){r.textContent='Could not compress this image.';return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='compressed-image.jpg';a.textContent='Download compressed image';a.className='btn';r.innerHTML=`Original: ${(f.size/1024).toFixed(1)} KB · Compressed: ${(blob.size/1024).toFixed(1)} KB<br>`;r.appendChild(a);},'image/jpeg',Number(document.getElementById('quality').value));};img.src=e.target.result;};reader.readAsDataURL(f);}
+function filterTools(){const q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.key.includes(q)||c.innerText.toLowerCase().includes(q)?'':'none');}
+function toggleLang(){urdu=!urdu;document.documentElement.lang=urdu?'ur':'en';document.documentElement.dir=urdu?'rtl':'ltr';document.getElementById('langBtn').textContent=urdu?'English':'اردو';document.getElementById('headline').innerHTML=urdu?'آپ کے کام کے مفت ٹولز،<br> ایک ہی جگہ۔':'The tools you need,<br> all in one place.';document.getElementById('subhead').textContent=urdu?'آسان اور مفت آن لائن ٹولز۔ اکاؤنٹ کی ضرورت نہیں۔ نیچے سے کوئی ٹول منتخب کریں۔':'Fast, easy-to-use online tools. No account needed. Choose a tool below and get started.';document.querySelectorAll('[data-en]').forEach(e=>e.textContent=urdu?e.dataset.ur:e.dataset.en);document.querySelectorAll('.card button').forEach((b,i)=>{if(b.parentElement.classList.contains('card'))b.textContent=urdu?'ٹول کھولیں':'Open tool';});document.getElementById('search').placeholder=urdu?'ٹول تلاش کریں...':'Search a tool...';document.getElementById('eyebrow').textContent=urdu?'آسان • مفت • مفید':'Simple • Free • Useful';}
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body></html>
